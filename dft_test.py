@@ -5,7 +5,7 @@ separation of real component and imaginary component for x and y values
 
 import math
 import numpy as np
-from scipy.io.wavefile import write
+from scipy.io import wavfile
 
 #implementation of the DFT algorithm from wikipedia
 def DFT(x):
@@ -50,7 +50,7 @@ waveform = np.sin(2 * np.pi * sample_number * freq_base / sps)
 
 waveform_quiet = waveform * 0.3
 
-waveform_integers = np.int36(waveform_quiet * 32767)
+waveform_integers = np.int16(waveform_quiet * 32767)
 
-write("soundlmao.wav", sps, waveform_integers)
+wavfile.write("soundlmao.wav", sps, waveform_integers)
 
