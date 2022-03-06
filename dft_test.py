@@ -3,6 +3,7 @@ separation of real component and imaginary component for x and y values
 
 """
 
+from ctypes.wintypes import SIZE
 import math
 import numpy as np
 from scipy.io import wavfile
@@ -39,15 +40,29 @@ def map_amplitude(x):
         i["amplitude"] = i["amplitude"]/previ
     return x
 
+def generate_square(size, dx):
+    arr = []
+    for i in range(0, size+1):
+        arr.append([0,i*dx])
+    for i in range(0, size):
+        arr.append([size*dx,i*dx])
+    for i in range(0, size):
+        arr.append([i*dx,0])
+    for i in range(0, size):
+        arr.append([i*dx,size*dx])
+    return arr
 
-test_points = [[0, 100], [0, 0], [100, 100],  [100, 0], [0,50], [50,0], [100,50], [50,100]] #should be a square idk
+test_points =  generate_square(5, 1)#should be a square idk
 test_points.sort()
 test_points_x = [x[0] for x in test_points]
 test_points_y = [x[1] for x in test_points]
 
+plt.scatter(test_points_x, test_points_y)
+plt.show()
+
 """
-triangle_points_x = [i for i in range(0,100)]
-triangle_points_y = [1 for i in range(0,100)]
+triangle_points_x = [i for i in range(0,50)]
+triangle_points_y = [i for i in range(0,50)]
 trianglex = DFT(triangle_points_x)
 trianglex = map_amplitude(trianglex)
 triangley = DFT(triangle_points_y)
@@ -55,11 +70,11 @@ triangley = map_amplitude(triangley)
 """
 
 wave_info_x = DFT(test_points_x)
-wave_info_x.sort(key=lambda x:x["amplitude"])
+#wave_info_x.sort(key=lambda x:x["amplitude"])
 wave_info_x = map_amplitude(wave_info_x)
 
 wave_info_y = DFT(test_points_y)
-wave_info_y.sort(key=lambda x:x["amplitude"])
+#wave_info_y.sort(key=lambda x:x["amplitude"])
 wave_info_y = map_amplitude(wave_info_y)
 
 
@@ -70,7 +85,7 @@ def generate_mono_sound(x, isx = True):
     #samples per second
     T = 1/ sps
     #frequency scaling factor
-    freq_base = 440 # i think this is A
+    freq_base = 1 # i think this is A
     duration = 5.0 # this is in seconds
     N = sps * duration #sample size
     waveform_quiet = np.empty(int(N))
@@ -79,9 +94,9 @@ def generate_mono_sound(x, isx = True):
         omega = 2 * np.pi * freq_base * wave["freq"]
         phase = wave["phase"]
         if (isx):
-            waveform = np.sin(omega * sample_number + phase )
+            waveform = np.sin(omega * sample_number + phase + np.pi/2)
         else:
-            waveform = np.cos(omega * sample_number + phase )
+            waveform = np.cos(omega * sample_number + phase)
         waveform_quiet += waveform * wave["amplitude"]
 
     #waveform_integers = np.int16(waveform_quiet * 32767)
@@ -92,10 +107,11 @@ def generate_mono_sound(x, isx = True):
 
 #generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1},{"freq":2.0,"phase":0,"amplitude":1}])
 #wavfile.write("test.wav", sps, generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}]))
+
 x = generate_mono_sound(wave_info_x)
 y = generate_mono_sound(wave_info_y, False)
-#x = generate_mono_sound(triangley)
-#y = generate_mono_sound(trianglex, False)
+#x = generate_mono_sound(trianglex)
+#y = generate_mono_sound(triangley, False)
 
 wavfile.write("sound_x.wav", sps, x)
 wavfile.write("sound_y.wav", sps, y)
