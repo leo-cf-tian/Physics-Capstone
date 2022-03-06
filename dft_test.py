@@ -75,12 +75,12 @@ def generate_mono_sound(x):
 
 
 
-wavfile.write("sound_x.wav", sps, generate_mono_sound(wave_info_x))
-wavfile.write("sound_y.wav", sps, generate_mono_sound(wave_info_y))
+wavfile.write("output/sound_x.wav", sps, generate_mono_sound(wave_info_x))
+wavfile.write("output/sound_y.wav", sps, generate_mono_sound(wave_info_y))
 
-left_channel = AudioSegment.from_wav("sound_x.wav")
-right_channel = AudioSegment.from_wav("sound_y.wav")
+left_channel = AudioSegment.from_wav("output/sound_x.wav")
+right_channel = AudioSegment.from_wav("output/sound_y.wav")
 
 stereo_sound = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
 
-stereo_sound.export("final.wav", format="wav")
+stereo_sound.export("output/final.wav", format="wav")
