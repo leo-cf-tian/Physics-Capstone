@@ -8,7 +8,6 @@ import numpy as np
 from scipy.io import wavfile
 from pydub import AudioSegment
 import matplotlib.pyplot as plt
-from sympy import true
 
 #implementation of the DFT algorithm from wikipedia
 def DFT(x):
@@ -41,24 +40,29 @@ def map_amplitude(x):
     return x
 
 
-test_points = [[0, 100], [0, 50], [0, 0], [100, 100], [100, 50], [100, 0], [50, 100], [50, 0]] #should be a square idk
+test_points = [[0, 100], [0, 0], [100, 100],  [100, 0], [0,50], [50,0], [100,50], [50,100]] #should be a square idk
+test_points.sort()
 test_points_x = [x[0] for x in test_points]
 test_points_y = [x[1] for x in test_points]
 
-triangle_points = []
-for i in range(0,100):
-    triangle_points.append(i)
-
-triangle = DFT(triangle_points)
-triangle = map_amplitude(triangle)
+"""
+triangle_points_x = [i for i in range(0,100)]
+triangle_points_y = [1 for i in range(0,100)]
+trianglex = DFT(triangle_points_x)
+trianglex = map_amplitude(trianglex)
+triangley = DFT(triangle_points_y)
+triangley = map_amplitude(triangley)
+"""
 
 wave_info_x = DFT(test_points_x)
+wave_info_x.sort(key=lambda x:x["amplitude"])
 wave_info_x = map_amplitude(wave_info_x)
 
 wave_info_y = DFT(test_points_y)
+wave_info_y.sort(key=lambda x:x["amplitude"])
 wave_info_y = map_amplitude(wave_info_y)
 
-one = DFT([1])
+
 
 sps = 44100
 
@@ -75,25 +79,29 @@ def generate_mono_sound(x, isx = True):
         omega = 2 * np.pi * freq_base * wave["freq"]
         phase = wave["phase"]
         if (isx):
-            waveform = np.sin(omega * sample_number + phase)
+            waveform = np.sin(omega * sample_number + phase )
         else:
-            waveform = np.cos(omega * sample_number + phase)
+            waveform = np.cos(omega * sample_number + phase )
         waveform_quiet += waveform * wave["amplitude"]
 
+    #waveform_integers = np.int16(waveform_quiet * 32767)
+    plt.scatter(np.arange(N)*T, waveform_quiet)
+    plt.show()
+    return waveform_quiet
 
-    waveform_integers = np.int16(waveform_quiet * 32767)
 
-    return waveform_integers
+#generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1},{"freq":2.0,"phase":0,"amplitude":1}])
+#wavfile.write("test.wav", sps, generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}]))
+x = generate_mono_sound(wave_info_x)
+y = generate_mono_sound(wave_info_y, False)
+#x = generate_mono_sound(triangley)
+#y = generate_mono_sound(trianglex, False)
 
+wavfile.write("sound_x.wav", sps, x)
+wavfile.write("sound_y.wav", sps, y)
+#wavfile.write("triangle.wav", sps, generate_mono_sound(triangle))
 
-generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1},{"freq":2.0,"phase":0,"amplitude":1}])
-
-wavfile.write("test.wav", sps, generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}]))
-wavfile.write("sound_x.wav", sps, generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}]))
-wavfile.write("sound_y.wav", sps, generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}], False))
-wavfile.write("triangle.wav", sps, generate_mono_sound(triangle))
-
-plt.scatter(generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}]), generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1}], False))
+plt.scatter(x, y)
 plt.show()
 
 left_channel = AudioSegment.from_wav("sound_x.wav")
