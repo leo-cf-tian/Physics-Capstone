@@ -3,6 +3,10 @@ import os
 import cv2
 import numpy as np
 import mediapipe as mp
+from sklearn.neighbors import NearestNeighbors
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
 
 # initialize mediapipe
 mp_selfie_segmentation = mp.solutions.selfie_segmentation
@@ -28,14 +32,30 @@ bg_image = cv2.resize(bg_image, (width, height))
 # combine frame and background image using the condition
 output_image = np.where(condition, frame, bg_image)
 
-edges = cv2.Canny(output_image, 125, 175)
+edges = cv2.Canny(cv2.GaussianBlur(output_image, [0,0], 1, 1), 100, 150)
 
 # Prints coordinates of white pixels
-coord = np.flip(np.column_stack(np.where(edges == [255])), axis=1)
+y, x = np.where(edges == [255])
 
-with open("gen.csv", 'a') as file:
+points = np.c_[x, y]
+clf = NearestNeighbors(n_neighbors=9).fit(points)
+G = clf.kneighbors_graph()
+
+T = nx.from_scipy_sparse_array(G)
+
+order = list(nx.dfs_preorder_nodes(T, 0))
+
+xx = x[order]
+yy = frame.shape[0] - y[order]
+
+plt.plot(xx, yy)
+plt.show()
+
+coord = np.column_stack([xx, yy])
+
+with open("gen.csv", 'w') as file:
     for c in coord:    
-        file.write(str(c[0] - 113.5) +", " + str(c[1] - 85) + "\n")
+        file.write(str(c[0]) +", " + str(c[1]) + "\n")
 
 cv2.imshow("Frame", edges)
 cv2.waitKey(0)

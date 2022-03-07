@@ -6,7 +6,7 @@ import csv
 import matplotlib.pyplot as plt
 
 
-file = open("data.csv", "r")
+file = open("input/test.csv", "r")
 
 csv_reader = csv.reader(file)
 
@@ -61,13 +61,13 @@ plt.show()
 
 print(len(x), len(y))
 
-repeat = 1000;
+repeat = 1000
 
-wavfile.write("sound_wave_x.wav", 44100, np.int16(x * 32767))
-wavfile.write("sound_wave_y.wav", 44100, np.int16(y * 32767))
+wavfile.write("output/sound_wave_x.wav", 44100, np.int16(x * 32767))
+wavfile.write("output/sound_wave_y.wav", 44100, np.int16(y * 32767))
 
-left_channel = AudioSegment.from_wav("sound_wave_x.wav") * repeat
-right_channel = AudioSegment.from_wav("sound_wave_y.wav") * repeat
+left_channel = AudioSegment.from_wav("output/sound_wave_x.wav") * repeat
+right_channel = AudioSegment.from_wav("output/sound_wave_y.wav") * repeat
 stereo_sound = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
-stereo_sound.export("final_sound.wav", format="wav")
+stereo_sound.export("output/final_sound.wav", format="wav")
 
