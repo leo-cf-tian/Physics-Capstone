@@ -67,7 +67,7 @@ plt.show()
 
 print(len(x), len(y))
 
-repeat = 5000;
+repeat = 1000;
 
 wavfile.write("sound_wave_x.wav", 44100, np.int16(x * 32767))
 wavfile.write("sound_wave_y.wav", 44100, np.int16(y * 32767))
