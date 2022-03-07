@@ -2,6 +2,7 @@ scipy
 pydub
 opencv-python
 numpy
-math
 matplotlib
-csv
+torch
+torchvision
+mediapipe
