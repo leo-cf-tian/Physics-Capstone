@@ -14,11 +14,11 @@ import matplotlib.pyplot as plt
 def DFT(x):
     N = len(x)
     X_final = [] # this is the final result, it gives the set of imaginary numbers
-    for k in range (0,N):
+    for k in range (0, N):
         re = 0
         im = 0
         for n in range(0,N):
-            phi = (2*math.pi*k*n) / N
+            phi = (2 * np.pi * k * n) / N
             re += x[n] * math.cos(phi)
             im -= x[n] * math.sin(phi)
         re = re / N
@@ -52,7 +52,8 @@ def generate_square(size, dx):
         arr.append([i*dx,size*dx])
     return arr
 
-test_points =  generate_square(5, 1)#should be a square idk
+# test_points = generate_square(100, 1)#should be a square idk
+test_points = [[1,1],[2,2],[3,1], [2,1]]
 test_points.sort()
 test_points_x = [x[0] for x in test_points]
 test_points_y = [x[1] for x in test_points]
@@ -70,14 +71,13 @@ triangley = map_amplitude(triangley)
 """
 
 wave_info_x = DFT(test_points_x)
-#wave_info_x.sort(key=lambda x:x["amplitude"])
+wave_info_x.sort(key=lambda x:x["amplitude"])
 wave_info_x = map_amplitude(wave_info_x)
 
+
 wave_info_y = DFT(test_points_y)
-#wave_info_y.sort(key=lambda x:x["amplitude"])
+wave_info_y.sort(key=lambda x:x["amplitude"])
 wave_info_y = map_amplitude(wave_info_y)
-
-
 
 sps = 44100
 
