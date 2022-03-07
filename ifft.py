@@ -6,7 +6,7 @@ import csv
 import matplotlib.pyplot as plt
 
 
-file = open("input/test.csv", "r")
+file = open("gen.csv", "r")
 
 csv_reader = csv.reader(file)
 
@@ -21,7 +21,7 @@ data_list_y = [x[1] for x in data_list]
 plt.plot(data_list_x,data_list_y,'mx')
 plt.show()
 
-duration = 0.01
+duration = 0.05
 data_length = len(data_list_x)
 N = int(44100 * duration)
 NN2 = int(data_length/2)
