@@ -24,19 +24,3 @@ with open("drawing.js", 'a') as file:
 cv2.imshow('image', edges)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
-
-
-'''
-Takes live camera feed and runs edge detection on it, displaying live results
-'''
-# cap = cv2.VideoCapture()
-# cap.open(0, cv2.CAP_DSHOW)
-# while(True):
-#     ret, frame = cap.read()
-#     edges = cv2.Canny(frame,50,150)
-#     cv2.imshow('frame', edges)
-#     if cv2.waitKey(1) & 0xFF == ord('q'):
-#         break
-# cap.release()
-# cv2.destroyAllWindows()
-

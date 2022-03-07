@@ -3,3 +3,6 @@ pydub
 opencv-python
 numpy
 matplotlib
+torch
+torchvision
+mediapipe
