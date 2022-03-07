@@ -35,7 +35,7 @@ coord = np.flip(np.column_stack(np.where(edges == [255])), axis=1)
 
 with open("gen.csv", 'a') as file:
     for c in coord:    
-        file.write(str(c[0] - 113.5) +", " + str(c[1] - 85) + "\n")
+        file.write(str(c[0]) +", " + str(c[1]) + "\n")
 
 cv2.imshow("Frame", edges)
 cv2.waitKey(0)
