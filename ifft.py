@@ -67,18 +67,13 @@ plt.show()
 
 print(len(x), len(y))
 
-repeat = 1000;
+repeat = 5000;
 
 wavfile.write("sound_wave_x.wav", 44100, np.int16(x * 32767))
 wavfile.write("sound_wave_y.wav", 44100, np.int16(y * 32767))
 
-left_channel = AudioSegment.from_wav("sound_wave_x.wav")
-right_channel = AudioSegment.from_wav("sound_wave_y.wav")
+left_channel = AudioSegment.from_wav("sound_wave_x.wav") * repeat
+right_channel = AudioSegment.from_wav("sound_wave_y.wav") * repeat
 stereo_sound = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
 stereo_sound.export("final_sound.wav", format="wav")
 
-final_sound = AudioSegment.from_wav("final_sound.wav")
-
-final_sound  = final_sound * 5000
-
-final_sound.export("final_sound_long.wav", format="wav")
