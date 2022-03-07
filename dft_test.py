@@ -3,7 +3,6 @@ separation of real component and imaginary component for x and y values
 
 """
 
-from ctypes.wintypes import SIZE
 import math
 import numpy as np
 from scipy.io import wavfile
