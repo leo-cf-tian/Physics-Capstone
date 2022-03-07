@@ -21,9 +21,10 @@ data_list_y = [x[1] for x in data_list]
 plt.plot(data_list_x,data_list_y,'mx')
 plt.show()
 
-duration = 0.05
+duration = 1
 data_length = len(data_list_x)
-N = int(44100 * duration)
+#N = int(44100 * duration)
+N = data_length * duration
 NN2 = int(data_length/2)
 
 fft_x = np.fft.fft(data_list_x) / data_length
