@@ -98,10 +98,10 @@ def generate_mono_sound(x, isx = True):
             waveform = np.cos(omega * sample_number + phase)
         waveform_quiet += waveform * wave["amplitude"]
 
-    #waveform_integers = np.int16(waveform_quiet * 32767)
+    waveform_integers = np.int16(waveform_quiet * 32767)
     plt.scatter(np.arange(N)*T, waveform_quiet)
     plt.show()
-    return waveform_quiet
+    return waveform_integers
 
 
 #generate_mono_sound([{"freq":1.0,"phase":0,"amplitude":1},{"freq":2.0,"phase":0,"amplitude":1}])
@@ -111,7 +111,7 @@ x = generate_mono_sound(wave_info_x)
 y = generate_mono_sound(wave_info_y, False)
 #x = generate_mono_sound(trianglex)
 #y = generate_mono_sound(triangley, False)
-
+print(len(x), len(y))
 wavfile.write("sound_x.wav", sps, x)
 wavfile.write("sound_y.wav", sps, y)
 #wavfile.write("triangle.wav", sps, generate_mono_sound(triangle))

@@ -20,9 +20,9 @@ data_list_y = [x[1] for x in data_list]
 plt.plot(data_list_x,data_list_y,'mx')
 plt.show()
 
-
+duration = 5
 data_length = len(data_list_x)
-N = 44100
+N = 44100 * duration
 NN2 = int(data_length/2)
 
 fft_x = np.fft.fft(data_list_x) / data_length
@@ -49,8 +49,8 @@ def map_amplitude(x):
 x = map_amplitude(x)
 y = map_amplitude(y)
 
-xnn = np.linspace(0,data_length,data_length)
-xn  = np.linspace(0,data_length,N)
+xnn = np.arange(data_length)
+xn  = np.arange(N) / 44100
 
 plt.plot(xn,y,'mx')
 plt.show()
@@ -58,11 +58,11 @@ plt.show()
 plt.plot(xn,x,'mx')
 plt.show()
 
+print(len(x), len(y))
+wavfile.write("sound_wave_x.wav", 44100, np.int16(x * 32767))
+wavfile.write("sound_wave_y.wav", 44100, np.int16(y * 32767))
 
-wavfile.write("sound_x.wav", N, x)
-wavfile.write("sound_y.wav", N, y)
-
-left_channel = AudioSegment.from_wav("sound_x.wav")
-right_channel = AudioSegment.from_wav("sound_y.wav")
+left_channel = AudioSegment.from_wav("sound_wave_x.wav")
+right_channel = AudioSegment.from_wav("sound_wave_y.wav")
 stereo_sound = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
-stereo_sound.export("final.wav", format="wav")
+stereo_sound.export("final_sound.wav", format="wav")
