@@ -50,12 +50,6 @@ def map_amplitude(x):
 x = map_amplitude(x)
 y = map_amplitude(y)
 
-def repeat_wave(x, r):
-    blank = np.array([])
-    for i in range(0, int(r)):
-        blank = np.concatenate((blank,x))
-        return blank
-
 xnn = np.arange(data_length)
 xn  = np.arange(N) / 44100
 
