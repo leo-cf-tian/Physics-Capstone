@@ -27,7 +27,9 @@ elif file.endswith((".mp4")):
     count = 0
     while success:
         if (count % 1 == 0):
+    
             x, y = gen.encode(frame)
+            
             wavfile.write("output/sound_wave_x.wav", 44100, np.int16(x * 32767))
             wavfile.write("output/sound_wave_y.wav", 44100, np.int16(y * 32767))
             left_channel = AudioSegment.from_wav("output/sound_wave_x.wav") * 2
