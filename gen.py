@@ -21,24 +21,24 @@ def get_edges(frame):
     frame = cv2.resize(frame, [200, int(200/width*height)])
     height, width, channel = frame.shape
 
-    # bg_image = cv2.imread('input/white.jpg')
+    bg_image = cv2.imread('input/white.jpg')
 
-    # RGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    # # get the result
-    # results = selfie_segmentation.process(RGB)
-    # # extract segmented mask
-    # mask = results.segmentation_mask
+    RGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # get the result
+    results = selfie_segmentation.process(RGB)
+    # extract segmented mask
+    mask = results.segmentation_mask
 
-    # # it returns true or false where the condition applies in the mask
-    # # it returns true or false where the condition applies in the mask
-    # condition = np.stack((mask,) * 3, axis=-1) > 0.5
+    # it returns true or false where the condition applies in the mask
+    # it returns true or false where the condition applies in the mask
+    condition = np.stack((mask,) * 3, axis=-1) > 0.5
     # # resize the background image to the same size of the original frame
-    # bg_image = cv2.resize(bg_image, (width, height))
+    bg_image = cv2.resize(bg_image, (width, height))
 
     # # combine frame and background image using the condition
-    # output_image = np.where(condition, frame, bg_image)
+    output_image = np.where(condition, frame, bg_image)
 
-    # edges = cv2.Canny(cv2.GaussianBlur(frame, [0, 0], 1, 1), 100, 150)
+    edges = cv2.Canny(cv2.GaussianBlur(frame, [0, 0], 1, 1), 100, 150)
     edges = cv2.Canny(frame, 100, 150)
 
     # Prints coordinates of white pixels

@@ -34,10 +34,13 @@ elif file.endswith((".mp4")):
             wavfile.write("output/sound_wave_y.wav", 44100, np.int16(y * 32767))
             left_channel = AudioSegment.from_wav("output/sound_wave_x.wav") * 2
             right_channel = AudioSegment.from_wav("output/sound_wave_y.wav") * 2
+            stereo_sound = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
             if count == 0:
-                stereo_sound = AudioSegment.from_mono_audiosegments(left_channel, right_channel)
+                stereo_sound.export("output/final_sound.wav", format="wav")
             else:
-                stereo_sound += AudioSegment.from_mono_audiosegments(left_channel, right_channel)
+                old_stereo_sound = AudioSegment.from_wav("output/final_sound.wav")
+                old_stereo_sound += stereo_sound
+                old_stereo_sound.export("output/final_sound.wav", format="wav")
         success,frame = cap.read()
         count += 1
-    stereo_sound.export("output/final_sound.wav", format="wav")
+    #stereo_sound.export("output/final_sound.wav", format="wav")
