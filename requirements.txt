@@ -6,3 +6,4 @@ matplotlib
 mediapipe
 sklearn
 networkx
+imutils
