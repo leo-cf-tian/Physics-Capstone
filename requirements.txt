@@ -7,3 +7,4 @@ mediapipe
 sklearn
 networkx
 imutils
+windows_curses
