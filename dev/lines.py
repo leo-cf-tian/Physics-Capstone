@@ -13,7 +13,7 @@ mp_selfie_segmentation = mp.solutions.selfie_segmentation
 selfie_segmentation = mp_selfie_segmentation.SelfieSegmentation(
     model_selection=1)
 
-frame = cv2.imread('input/test.jpg')
+frame = cv2.imread('input/4ktest.jpg')
 bg_image = cv2.imread('input/white.jpg')
 height, width, channel = frame.shape
 
