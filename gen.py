@@ -53,7 +53,7 @@ def get_edges(frame, blur, detect):
     if len(points) <= 18:
         return []
     
-    clf = NearestNeighbors(n_neighbors=21).fit(points)
+    clf = NearestNeighbors(n_neighbors=23).fit(points)
     G = clf.kneighbors_graph()
 
     T = nx.from_scipy_sparse_array(G)
@@ -83,7 +83,7 @@ def ifft(data_list):
 
         #duration = 0.016777
         #duration just for rickroll
-        duration = 0.05
+        duration = 0.033333
         data_length = len(data_list_x)
         if int(44100 * duration) > data_length:
             N = int(44100 * duration)
