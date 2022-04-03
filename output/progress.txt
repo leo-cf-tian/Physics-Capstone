@@ -1,2 +1,2 @@
-input/test2.mp4
+input/rick_full.mp4
 Finished!

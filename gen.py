@@ -41,7 +41,7 @@ def get_edges(frame, blur, detect):
         frame = np.where(condition, frame, bg_image)
 
     if blur:
-        frame = cv2.GaussianBlur(frame, [0, 0], 1, 1)
+        frame = cv2.GaussianBlur(frame, [0, 0], 1)
     
     edges = imutils.auto_canny(frame)
 
@@ -50,10 +50,10 @@ def get_edges(frame, blur, detect):
 
     points = np.c_[x, y]
 
-    if len(points) <= 16:
+    if len(points) <= 18:
         return []
     
-    clf = NearestNeighbors(n_neighbors=15).fit(points)
+    clf = NearestNeighbors(n_neighbors=17).fit(points)
     G = clf.kneighbors_graph()
 
     T = nx.from_scipy_sparse_array(G)
@@ -81,7 +81,9 @@ def ifft(data_list):
         data_list_x = [x[0] for x in data_list]
         data_list_y = [x[1] for x in data_list]
 
-        duration = 0.016777
+        #duration = 0.016777
+        #duration just for rickroll
+        duration = 0.05
         data_length = len(data_list_x)
         if int(44100 * duration) > data_length:
             N = int(44100 * duration)
