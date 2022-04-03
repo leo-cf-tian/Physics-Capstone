@@ -19,7 +19,7 @@ def get_edges(frame, blur, detect):
         model_selection=1)
     
     height, width, channel = frame.shape
-    frame = cv2.resize(frame, [75, int(75/width*height)])
+    frame = cv2.resize(frame, [70, int(70/width*height)])
     height, width, channel = frame.shape
 
     if detect:
@@ -53,7 +53,7 @@ def get_edges(frame, blur, detect):
     if len(points) <= 16:
         return []
     
-    clf = NearestNeighbors(n_neighbors=21).fit(points)
+    clf = NearestNeighbors(n_neighbors=20).fit(points)
     G = clf.kneighbors_graph()
 
     T = nx.from_scipy_sparse_array(G)
@@ -81,7 +81,7 @@ def ifft(data_list):
         data_list_x = [x[0] for x in data_list]
         data_list_y = [x[1] for x in data_list]
 
-        duration = 0.016777
+        duration = 0.033333
         data_length = len(data_list_x)
         if int(44100 * duration) > data_length:
             N = int(44100 * duration)
