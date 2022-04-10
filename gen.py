@@ -19,7 +19,7 @@ def get_edges(frame, blur, detect):
         model_selection=1)
     
     height, width, channel = frame.shape
-    frame = cv2.resize(frame, [75, int(75/width*height)])
+    frame = cv2.resize(frame, [70, int(70/width*height)])
     height, width, channel = frame.shape
 
     if detect:
@@ -41,7 +41,7 @@ def get_edges(frame, blur, detect):
         frame = np.where(condition, frame, bg_image)
 
     if blur:
-        frame = cv2.GaussianBlur(frame, [0, 0], 1, 1)
+        frame = cv2.GaussianBlur(frame, [0, 0], 1)
     
     edges = imutils.auto_canny(frame)
 
@@ -50,7 +50,7 @@ def get_edges(frame, blur, detect):
 
     points = np.c_[x, y]
 
-    if len(points) <= 16:
+    if len(points) <= 18:
         return []
     
     clf = NearestNeighbors(n_neighbors=21).fit(points)
@@ -81,7 +81,7 @@ def ifft(data_list):
         data_list_x = [x[0] for x in data_list]
         data_list_y = [x[1] for x in data_list]
 
-        duration = 0.016777
+        duration = 0.033333
         data_length = len(data_list_x)
         if int(44100 * duration) > data_length:
             N = int(44100 * duration)
