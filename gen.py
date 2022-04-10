@@ -12,14 +12,15 @@ This list is ordered to form a path
 """
 
 
-def get_edges(frame, blur, detect):
+def get_edges(frame, blur, detect, resize):
     # initialize mediapipe
     mp_selfie_segmentation = mp.solutions.selfie_segmentation
     selfie_segmentation = mp_selfie_segmentation.SelfieSegmentation(
         model_selection=1)
     
     height, width, channel = frame.shape
-    frame = cv2.resize(frame, [70, int(70/width*height)])
+    if resize:
+        frame = cv2.resize(frame, [70, int(70/width*height)])
     height, width, channel = frame.shape
 
     if detect:
@@ -121,8 +122,8 @@ def map_amplitude(x):
     x = x/np.abs(previ)
     return x
 
-def encode(frame, blur, detect):
-    return ifft(get_edges(frame, blur, detect))
+def encode(frame, blur, detect, resize):
+    return ifft(get_edges(frame, blur, detect, resize))
 
 
 def count_frames_manual(video):

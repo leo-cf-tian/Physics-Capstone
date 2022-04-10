@@ -45,7 +45,7 @@ with open('output/progress.txt') as f:
 
 if file.endswith((".jpg", ".png")):
     frame = cv2.imread(file)
-    x, y = gen.encode(frame, blur, detect)
+    x, y = gen.encode(frame, blur, detect, False)
 
     repeat = 1000
 
@@ -87,7 +87,7 @@ elif file.endswith((".mp4", ".avi")):
     while success:
 
         try:
-            x, y = gen.encode(frame, blur, detect)
+            x, y = gen.encode(frame, blur, detect, True)
             wavfile.write("output/sound_wave_x.wav",
                             44100, np.int16(x * 32767))
             wavfile.write("output/sound_wave_y.wav",
