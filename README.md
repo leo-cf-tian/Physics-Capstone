@@ -10,7 +10,9 @@ Inspiration video: https://www.youtube.com/watch?v=4gibcRfp4zA
 (these videos include the audio that used to generate the images, it may be loud)
 
 My physics teacher : https://youtu.be/_fmOFltRRl8 
+
 Mark : https://youtu.be/VZEjosdaVmU 
+
 A Classic : https://youtu.be/tTSTqkKeNfE
 
 ## Description
